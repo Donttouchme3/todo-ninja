@@ -9,6 +9,7 @@ client = APIClient()
 def user_register(payload): return client.post('/auth/user/register', data=payload, format='multipart')
 def user_login(payload): return client.post('/auth/user/login', data=payload, format='multipart')
 def user_change_password(payload): return client.post('/auth/user/change-password', data=payload, format='json')
+def user_delete(auth_token): return client.delete('/auth/user/delete', headers=auth_token)
 
 
 
@@ -39,3 +40,5 @@ USER_PAYLOAD = {
    
     
 }
+
+INVALID_TOKEN = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTI3OTg2MjAsInN1YiI6ImFjY2VzcyJ9.Q6V9xNe5v9ucXD9n4V7ogLszTX0zqOizWPX1WaFYFAd'}
