@@ -1,0 +1,1 @@
+def get_status(): return [('to-do', 'to-do'), ('in-progress', 'in progress'), ('done', 'done')]
