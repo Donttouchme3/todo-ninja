@@ -34,6 +34,9 @@ def user_login(request: HttpRequest, username: str = Form(...), password: str = 
     user = get_object_or_404(CustomUser, username=username)
     if check_password(password, user.password):
         return create_token(user.id)
+    else:
+        return Response({'error': 'Логин или пароль не верны'}, status=status.HTTP_400_BAD_REQUEST)
+    
 
 @router.post('user/change-password')
 def user_change_password(request, data: UserPasswordUpdateSchema):
@@ -42,10 +45,10 @@ def user_change_password(request, data: UserPasswordUpdateSchema):
         if user.check_password(data.password):
             user.set_password(data.new_password)
             user.save()
-            return {'message': 'Пароль успешно изменен'}
-        else: return {'error': 'Логин или пароль не верны'}
+            return Response({'message': 'Пароль успешно изменен'}, status=status.HTTP_202_ACCEPTED)
+        else: return Response({'error': 'Логин или пароль не верны'}, status=status.HTTP_400_BAD_REQUEST)
     except AttributeError:
-        return {'error': 'Такого пользователя не существует'}
+        return Response({'error': 'Такого пользователя не существует'}, status=status.HTTP_404_NOT_FOUND)
     
 @router.delete('user/delete', auth=AuthBearer(), response={204: None})
 def user_delete(request: HttpRequest, ):
