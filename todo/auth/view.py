@@ -1,4 +1,6 @@
 from ninja import Form, Router, File
+from ninja.responses import Response
+from ninja_extra import status
 from ninja.files import UploadedFile
 from django.shortcuts import get_object_or_404
 from django.contrib.auth.hashers import check_password
@@ -8,6 +10,7 @@ from typing import Optional
 from .schemas import UserRegistrationSchema, UserPasswordUpdateSchema, UserUpdateSchema
 from .jwt import AuthBearer, create_token
 from todo_app.models import CustomUser
+
 
 
 router = Router()
@@ -22,7 +25,7 @@ def user_register(request: HttpRequest, data: UserRegistrationSchema = Form(...)
             first_name=data.first_name,
             last_name=data.last_name
         )
-        return {"message": "Вы успешно зарегистрировались"}
+        return Response({"message": "Вы успешно зарегистрировались"}, status=status.HTTP_201_CREATED)
     except IntegrityError:
         return {'error': 'Это имя пользователя уже занято'}
 
