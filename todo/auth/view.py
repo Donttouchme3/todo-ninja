@@ -66,7 +66,7 @@ def user_data_update(request: HttpRequest, data: UserUpdateSchema = Form(...), a
     if avatar:
         user.avatar = avatar
     user.save()
-    return {'message': 'Данные успешно обновлены'}
+    return Response({'message': 'Данные успешно обновлены'}, status=status.HTTP_202_ACCEPTED)
 
 
 

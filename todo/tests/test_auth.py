@@ -106,4 +106,12 @@ class TestUserDelete:
             assert _e.__class__.__name__ == DecodeError or InvalidSignatureError
             
 
+@pytest.mark.django_db
+class TestUpdate:
+    def test_success(self, auth_token):
+        user_payload = confs.USER_PAYLOAD['USER_UPDATE']['USER_SUCCESS_UPDATE_PAYLOAD']
+        user_update_response = confs.user_update(auth_token, user_payload)
+        assert user_update_response.status_code == status.HTTP_202_ACCEPTED         
+            
+    
 
