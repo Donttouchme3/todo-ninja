@@ -10,7 +10,7 @@ def user_register(payload): return client.post('/auth/user/register', data=paylo
 def user_login(payload): return client.post('/auth/user/login', data=payload, format='multipart')
 def user_change_password(payload): return client.post('/auth/user/change-password', data=payload, format='json')
 def user_delete(auth_token): return client.delete('/auth/user/delete', headers=auth_token)
-
+def user_update(auth_token, payload, avatar = None): return client.post('/auth/user/update', headers=auth_token, data=payload)
 
 
 def check_required_fields(detail):
@@ -34,7 +34,9 @@ USER_PAYLOAD = {
         'USER_SUCCESS_CHANGE_PASSWORD_PAYLOAD': {'username': 'asilbek', 'password': 'As031001', 'new_password': 'Ma240302'},
         'USER_FAIL_CHANGE_PASSWORD_PAYLOAD': {'username': 'asilbek', 'password': '031001', 'new_password': '12345'},
         'USER_NONEXISTING_USER_PAYLOAD': {'username': 'shavkatov', 'password': '031001', 'new_password': '12345'}
-        
+    },
+    'USER_UPDATE': {
+        'USER_SUCCESS_UPDATE_PAYLOAD': {'first_name': 'Asilbek', 'last_name': 'Shavkatov', 'email': 'asilbek6921@gmail.com', 'avatar': ('1.jpg', open('C:/Users/asil0/OneDrive/Изображения/1.jpg', 'rb'))},
     }
     
    
