@@ -12,6 +12,7 @@ router = Router()
 
 @router.post('/tasks', response=schemas.TaskSchemaOut, auth=AuthBearer())
 def create_tasks(request: HttpRequest, payload: schemas.TaskSchemaIn):
+    print(payload.status)
     create_task = models.Task.objects.create(**payload.dict(), user=request.auth)
     return create_task
 
