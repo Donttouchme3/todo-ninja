@@ -113,6 +113,8 @@ class TestUpdate:
         user_update_response = confs.user_update(auth_token, user_payload)
         assert user_update_response.status_code == status.HTTP_202_ACCEPTED         
             
+            
+    
     
     
 

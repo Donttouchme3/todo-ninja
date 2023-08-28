@@ -44,12 +44,7 @@ USER_PAYLOAD = {
 }
 
 TASK_PAYLOAD = {
-    'TASK_CREATE_PAYLOAD': {
-        "title": "Я добавил таск",
-        "description": "test description",
-        "end_date": "2023-08-25",
-        "status": 'to-do'
-    },
+    'TASK_CREATE_PAYLOAD': {"title": "Я добавил таск","description": "test description","end_date": "2023-08-25","status": 'to-do'},
 }
 
 INVALID_TOKEN = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTI3OTg2MjAsInN1YiI6ImFjY2VzcyJ9.Q6V9xNe5v9ucXD9n4V7ogLszTX0zqOizWPX1WaFYFAd'}
