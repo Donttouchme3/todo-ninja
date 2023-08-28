@@ -1,5 +1,5 @@
 from ninja import Router, Form
-from django.http import HttpRequest
+from django.http import HttpRequest, HttpResponse
 from auth.jwt import AuthBearer
 from . import models, schemas
 from typing import List
@@ -10,9 +10,8 @@ from ninja import Query
 
 router = Router()
 
-@router.post('/tasks', response=schemas.TaskSchemaOut, auth=AuthBearer())
+@router.post('/tasks', response=schemas.TaskSchemaOut,auth=AuthBearer())
 def create_tasks(request: HttpRequest, payload: schemas.TaskSchemaIn):
-    print(payload.status)
     create_task = models.Task.objects.create(**payload.dict(), user=request.auth)
     return create_task
 

@@ -23,6 +23,14 @@ def check_required_fields(detail):
         checking.append(i["loc"][1] in fields)
     return True if False not in checking else False 
 
+def check_tasK_required_fields(detail):
+    fields = [field.name for field in model.Task._meta.get_fields()]
+    checking = []
+    for i in detail:      
+        checking.append(i["loc"][2] in fields)
+    return True if False not in checking else False 
+    
+
 USER_PAYLOAD = {
     'USER_REGISTER': {
         'USER_SUCCESS_REGISTER_PAYLOAD': {"username": "asilbek", "email": "asilbek@icloud.com",
