@@ -11,11 +11,13 @@ def user_login(payload): return client.post('/auth/user/login', data=payload, fo
 def user_change_password(payload): return client.post('/auth/user/change-password', data=payload, format='json')
 def user_delete(auth_token): return client.delete('/auth/user/delete', headers=auth_token)
 def user_update(auth_token, payload): return client.post('/auth/user/update', headers=auth_token, data=payload)
-
-
 def task_create(payload, auth_token): return client.post('/api/tasks', data=payload, headers=auth_token, format='json')
-def get_tasks(auth_token): return client.get('/api/tasks', headers=auth_token)
-def get_task(auth_token): return client.get('/api/tasks/1', headers=auth_token)
+def tasks_get(auth_token): return client.get('/api/tasks', headers=auth_token)
+def tasks_get_by_filter(auth_token): return client.get('/api/tasks?end_date=2023-08-01', headers=auth_token)
+def tasks_get_by_status(auth_token, status): return client.get(f'/api/tasks/{status}', headers=auth_token) 
+def task_get(auth_token, task_id=1): return client.get(f'/api/tasks/{task_id}', headers=auth_token)
+def task_update(auth_token, payload, task_id=1): return client.patch(f'/api/tasks/{task_id}', headers=auth_token, data=payload, format='json')
+def task_delete(auth_token, task_id=1): return client.delete(f'/api/tasks/{task_id}', headers=auth_token)
 
 
 def check_required_fields(detail):
@@ -55,6 +57,7 @@ USER_PAYLOAD = {
 
 TASK_PAYLOAD = {
     'TASK_CREATE_PAYLOAD': {"title": "Я добавил таск","description": "test description","end_date": "2023-08-25","status": 'to-do', 'start_date': '2023-08-05'},
+    'TASK_UPDATE_PAYLOAD': {'title': 'Я обновил таск', 'description': 'Я обновил description таска ', 'status': 'done'}
 }
 
 INVALID_TOKEN = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTI3OTg2MjAsInN1YiI6ImFjY2VzcyJ9.Q6V9xNe5v9ucXD9n4V7ogLszTX0zqOizWPX1WaFYFAd'}
