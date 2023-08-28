@@ -29,13 +29,10 @@ def get_task(request: HttpRequest, task_id: int):
     task = get_object_or_404(models.Task, user=request.auth, id=task_id)
     return task
             
-@router.api_operation(['PUT', 'PATCH'],'/tasks/{int:task_id}', response=schemas.TaskSchemaOut, auth=AuthBearer())
+@router.patch('/tasks/{int:task_id}', response=schemas.TaskSchemaOut, auth=AuthBearer())
 def update_task(request:HttpRequest, payload: schemas.TaskPatchSchemaIn, task_id: int):
     task = get_object_or_404(models.Task, id=task_id, user=request.auth)
-    if request.method == 'PUT': payload_schema = schemas.TaskSchemaIn
-    else: payload_schema = schemas.TaskPatchSchemaIn
-    payload_instance = payload_schema(**payload.dict())
-    for attr, value in payload_instance.dict().items():
+    for attr, value in payload.dict().items():
         if value is not None:
             setattr(task, attr, value)
     task.save()
