@@ -1,5 +1,5 @@
 import jwt
-from jwt import PyJWKError
+from jwt import PyJWKError, InvalidSignatureError, DecodeError
 
 from todo_app.models import CustomUser
 from django.shortcuts import get_object_or_404
@@ -43,12 +43,21 @@ def get_current_user(token: str):
         token_data = TokenPayload(**payload)
     except PyJWKError:
         return None
+    except InvalidSignatureError:
+        return None
+    except DecodeError:
+        return None
+    
     user = get_object_or_404(CustomUser, id=token_data.user_id)
     return user
+    
 
 
 class AuthBearer(HttpBearer):
     def authenticate(self, request, token: str):
-        user = get_current_user(token)
-        if user:
-            return user
+        if token:
+            user = get_current_user(token)
+            if user:
+                return user
+        
+       
