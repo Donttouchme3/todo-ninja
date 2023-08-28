@@ -14,6 +14,8 @@ def user_update(auth_token, payload): return client.post('/auth/user/update', he
 
 
 def task_create(payload, auth_token): return client.post('/api/tasks', data=payload, headers=auth_token, format='json')
+def get_tasks(auth_token): return client.get('/api/tasks', headers=auth_token)
+def get_task(auth_token): return client.get('/api/tasks/1', headers=auth_token)
 
 
 def check_required_fields(detail):
@@ -52,7 +54,7 @@ USER_PAYLOAD = {
 }
 
 TASK_PAYLOAD = {
-    'TASK_CREATE_PAYLOAD': {"title": "Я добавил таск","description": "test description","end_date": "2023-08-25","status": 'to-do'},
+    'TASK_CREATE_PAYLOAD': {"title": "Я добавил таск","description": "test description","end_date": "2023-08-25","status": 'to-do', 'start_date': '2023-08-05'},
 }
 
 INVALID_TOKEN = {'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoxLCJleHAiOjE2OTI3OTg2MjAsInN1YiI6ImFjY2VzcyJ9.Q6V9xNe5v9ucXD9n4V7ogLszTX0zqOizWPX1WaFYFAd'}

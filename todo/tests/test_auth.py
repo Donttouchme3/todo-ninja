@@ -8,7 +8,8 @@ from jwt.exceptions import InvalidSignatureError, DecodeError
 @pytest.fixture
 @pytest.mark.django_db
 def create_user():
-    model.CustomUser.objects.create_user(**confs.USER_PAYLOAD['USER_REGISTER']['USER_SUCCESS_REGISTER_PAYLOAD'])
+    user = model.CustomUser.objects.create_user(**confs.USER_PAYLOAD['USER_REGISTER']['USER_SUCCESS_REGISTER_PAYLOAD'])
+    return user
 
 @pytest.fixture
 @pytest.mark.django_db

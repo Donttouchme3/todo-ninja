@@ -27,7 +27,7 @@ class TaskSchemaIn(Schema):
     status: Optional[str]
 
 class TaskSchemaOut(Schema):
-    pk: int
+    id: int
     title: str
     description: str
     start_date: date
@@ -41,7 +41,7 @@ class TaskSchemaOut(Schema):
     
 
 class TasksSchemaOut(Schema):
-    pk: int
+    id: int
     title: str
     start_date: date
     end_date: date
