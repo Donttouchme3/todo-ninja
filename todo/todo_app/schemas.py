@@ -11,7 +11,7 @@ class NotesUpdateSchemaIn(Schema):
     text: str
     
 class NotesBaseSchemaOut(Schema):
-    pk: int
+    id: int
     task_id: int
     text: str
 
@@ -59,6 +59,7 @@ class TaskPatchSchemaIn(Schema):
     status: Optional[str]
     
 class UserSchemaOut(Schema):
+    id: int
     avatar: str
     first_name: str
     last_name: str
