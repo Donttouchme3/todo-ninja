@@ -14,6 +14,13 @@ def create_task(create_user):
     task = model.Task.objects.create(**task_payload)
     return task
 
+
+@pytest.fixture
+@pytest.mark.django_db
+def create_note(create_task, create_user):
+    note = model.Notes.objects.create(user=create_user, task=create_task, text='Note')
+    return note
+
 class TestToken:
     @classmethod
     def setup_class(cls):
@@ -101,6 +108,35 @@ class TestUpdateDeleteTask:
             assert task_delete_response.json()['detail'] == 'Not Found'
             assert task_delete_response.status_code == status.HTTP_404_NOT_FOUND
 
+        
+class TestUserData:
+    @pytest.mark.django_db
+    def test_user_data(self, auth_token):
+        user_data_response = confs.user_data(auth_token)
+        assert user_data_response.status_code == status.HTTP_200_OK
+        for i in user_data_response.json():
+            assert i in [field.name for field in model.CustomUser._meta.get_fields()]
+            
+            
+class TestNotes:
+    @pytest.mark.django_db
+    def test_note_create_success(self, create_task, auth_token):
+        note_payload = confs.NOTE_PAYLOAD['NOTE_CREATE_PAYLOAD']
+        note_create_response = confs.note_create(auth_token, note_payload)
+        assert 'id' in note_create_response.json()
+        assert note_create_response.status_code == status.HTTP_200_OK
+        
+    @pytest.mark.django_db
+    def test_note_update(self, auth_token, create_note):
+        note_payload = confs.NOTE_PAYLOAD['NOTE_UPDATE_PAYLOAD']
+        note_update_response = confs.note_update(auth_token, note_payload, 1)
+        assert 'Я обновил заметку' == note_update_response.json()['text']
+        assert note_update_response.status_code == status.HTTP_200_OK
+        
+    @pytest.mark.django_db
+    def test_note_delete(self, auth_token, create_note):
+        note_delete_payload = confs.note_delete(auth_token, 1)
+        assert note_delete_payload.status_code == status.HTTP_204_NO_CONTENT or status.HTTP_404_NOT_FOUND
         
         
     
